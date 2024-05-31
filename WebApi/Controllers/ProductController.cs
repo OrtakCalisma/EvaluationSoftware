@@ -21,7 +21,18 @@ namespace WebApi.Controllers
             var result = _productService.GetById(id);
             if (result.Success)
             {
-                return Ok(result.Message);
+                return Ok(result.Data);
+            }
+            return BadRequest(result.Message);
+        }
+
+        [HttpGet("GetBySerialNo")]
+        public IActionResult GetBySerialNo(string serialNumber)
+        {
+            var result = _productService.GetBySerialNumber(serialNumber);
+            if (result.Success)
+            {
+                return Ok(result.Data);
             }
 
             return BadRequest(result.Message);

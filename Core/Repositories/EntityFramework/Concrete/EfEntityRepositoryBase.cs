@@ -44,12 +44,22 @@ namespace Core.Repositories.EntityFramework.Concrete
 
         public IList<TEntity> GetList(Expression<Func<TEntity, bool>> filter = null)
         {
-            throw new NotImplementedException();
+            using (var context = new TContext())
+            {
+                return filter == null
+                    ? context.Set<TEntity>().ToList()
+                    : context.Set<TEntity>().Where(filter).ToList();
+            }
         }
 
         public void Update(TEntity entity)
         {
-            throw new NotImplementedException();
+            using (var context = new TContext())
+            {
+                var updatedEntity = context.Entry(entity);
+                updatedEntity.State = EntityState.Modified;
+                context.SaveChanges();
+            }
         }
     }
 }

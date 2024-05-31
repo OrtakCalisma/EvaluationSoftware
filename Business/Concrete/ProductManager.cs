@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Aspects.Autofac.Transaction;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -24,6 +25,10 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<Product>(_productDal.Get(p => p.Id == productId));
         }
+        public IDataResult<List<Product>> GetBySerialNumber(string serialNumber)
+        {
+            return new SuccessDataResult<List<Product>>(_productDal.GetList(p => p.SerialNumber == serialNumber).ToList());
+        }
 
         public IDataResult<List<Product>> GetList()
         {
@@ -44,7 +49,8 @@ namespace Business.Concrete
 
         public IResult Delete(Product product)
         {
-            throw new NotImplementedException();
+            _productDal.Delete(product);
+            return new SuccessResult(Messages.ProductDeleted);
         }
 
         public IDataResult<List<Product>> GetListByCategory(int categoryId)
@@ -52,24 +58,26 @@ namespace Business.Concrete
             throw new NotImplementedException();
         }
 
+        [TransactionScopeAspect]
         public IResult TransactionalOperation(Product product)
         {
-            throw new NotImplementedException();
+            _productDal.Update(product);
+            _productDal.Add(product);
+            return new SuccessResult(Messages.ProductUpdated);
         }
 
         public IResult Update(Product product)
         {
-            throw new NotImplementedException();
+            _productDal.Update(product);
+            return new SuccessResult(Messages.ProductUpdated);
         }
         private IResult CheckIfProductNameExists(string serialNumber)
         {
-
             var result = _productDal.GetList(p => p.SerialNumber == serialNumber).Any();
             if (result)
             {
                 return new ErrorResult(Messages.ProductNameAlreadyExists);
             }
-
             return new SuccessResult();
         }
     }

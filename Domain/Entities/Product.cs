@@ -10,9 +10,9 @@ namespace Domain.Entities
     {
         public int Id { get; set; }
         public string SerialNumber { get; set; }
-
         public string Type { get; set; }
         public string ProjectName { get; set; }
+        public List<string> Faults { get; set; }
 
     }
 }
