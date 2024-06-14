@@ -8,6 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddScoped<IFaultDal, FaultDal>();
+builder.Services.AddScoped<IFaultService, FaultManager>();
+
 builder.Services.AddScoped<IProductDal, ProductDal>();
 builder.Services.AddScoped<IProductService, ProductManager>();
 

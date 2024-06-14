@@ -2,7 +2,6 @@
 using DataAccess.Abstract;
 using DataAccess.Context.EntityFramework;
 using Domain.Entities;
-using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +10,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete
 {
-    public class ProductDal : EfEntityRepositoryBase<Product, EFContext>, IProductDal
+    public class FaultDal : EfEntityRepositoryBase<Faults, EFContext>, IFaultDal
     {
-
     }
 }
