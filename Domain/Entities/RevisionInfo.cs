@@ -6,15 +6,14 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class ATE
+    public class RevisionInfo
     {
         public int Id { get; set; }
-        public string PartNumber { get; set; }
-        public string SerialNumber { get; set; }
-        public string Name { get; set; }
         public string Description { get; set; }
+        public int UUTHwRev { get; set; }
+        public int V27RevNumber { get; set; }
         public int TPSId { get; set; }
-        public DateTime CalibrationDate { get; set; }
-        public string BomList { get; set; }
+        public int ATEId { get; set; }
+        public int ITAId { get; set; }
     }
 }

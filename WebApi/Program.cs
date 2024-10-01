@@ -14,6 +14,11 @@ builder.Services.AddScoped<IFaultService, FaultManager>();
 builder.Services.AddScoped<IProductDal, ProductDal>();
 builder.Services.AddScoped<IProductService, ProductManager>();
 
+builder.Services.AddScoped<IATEDal, ATEDal>();
+builder.Services.AddScoped<IATEService, ATEManager>();
+
+builder.Services.AddScoped<IITADal, ITADal>();
+builder.Services.AddScoped<IITAService, ITAManager>();
 
 
 builder.Services.AddControllers();

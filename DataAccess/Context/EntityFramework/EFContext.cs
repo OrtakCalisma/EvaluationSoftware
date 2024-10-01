@@ -13,9 +13,10 @@ namespace DataAccess.Context.EntityFramework
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=localhost,1434;Database=TestDatabase;User=sa;Password=Password1;TrustServerCertificate=True");
-            
+            optionsBuilder.UseSqlServer("Server=localhost;Database=TestDatabase;Trusted_Connection=true;Encrypt=False;TrustServerCertificate=True");
+
             /*"Server=localhost;Database=TestDatabase;Trusted_Connection=true;Encrypt=False;TrustServerCertificate=True"*/
+            // Server=localhost,1434;Database=TestDatabase;User=sa;Password=Password1;TrustServerCertificate=True
         }
 
         public DbSet<Product> Product { get; set; }
