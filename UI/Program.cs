@@ -1,7 +1,15 @@
+using Business.Abstract;
+using Business.Concrete;
+using DataAccess.Abstract;
+using DataAccess.Concrete;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddHttpClient("ateClient", client =>
+client.BaseAddress = new Uri("https://localhost:44367/api/ATE/"));
 
 var app = builder.Build();
 

@@ -2,6 +2,11 @@
 using Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Net.Http.Json;
+using System.Reflection.Metadata;
+using System.Text.Json.Serialization;
+using System.Xml.Linq;
 
 namespace WebApi.Controllers
 {
@@ -34,7 +39,8 @@ namespace WebApi.Controllers
             {
                 return Ok(result.Data);
             }
-            return BadRequest(result.Message);
+            return BadRequest(result.Data);
         }
+
     }
 }
