@@ -1,5 +1,6 @@
 using Business.Abstract;
 using Business.Concrete;
+using Core.Utilities.Helper.FileHelper;
 using DataAccess.Abstract;
 using DataAccess.Concrete;
 using DataAccess.Context.EntityFramework;
@@ -19,6 +20,10 @@ builder.Services.AddScoped<IATEService, ATEManager>();
 
 builder.Services.AddScoped<IITADal, ITADal>();
 builder.Services.AddScoped<IITAService, ITAManager>();
+
+builder.Services.AddScoped<IFileDal, FileDal>();
+builder.Services.AddScoped<IFileService, FileManager>();
+builder.Services.AddScoped<IFileHelper, FileHelper>();
 
 
 builder.Services.AddControllers();

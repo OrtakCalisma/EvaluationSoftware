@@ -21,7 +21,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("Add")]
-        public IActionResult Add([FromBody] ATE ate)
+        public IActionResult Add(ATE ate)
         {
             var result = _ateService.Add(ate);
             if (result.Success)

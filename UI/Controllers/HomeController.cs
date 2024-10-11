@@ -6,12 +6,17 @@ using DataAccess.Concrete;
 using Domain.Entities;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.OpenApi.Extensions;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.IO;
 using System.Net.Http;
 using System.Reflection.Metadata;
+using System.Text;
 using System.Text.Json;
 using System.Xml.Linq;
 using UI.Models;
@@ -34,14 +39,97 @@ namespace UI.Controllers
 
         public async Task<IActionResult> Index()
         {
-            await GeneratePdf();
-            //var ateClient = _httpClient.CreateClient("ateClient");
+            //await GeneratePdf();
             _httpClient.BaseAddress = new Uri("https://localhost:44367/api/ATE/");
             var result = await _httpClient.GetAsync("GetAll");
             var jsonString = await result.Content.ReadFromJsonAsync<List<ATE>>();
 
             return View(jsonString);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> PostAte([FromBody] ATE body)
+        {
+            //var atee = new ATE
+            //{
+            //    Description = "ddasdasd",
+            //    CalibrationDate = DateTime.Now,
+            //    Name = "name",
+            //    SerialNumber = "1234567890",
+            //    PartNumber = "1234567890",
+            //    BomList = "dsadas",
+            //    TPSId = 4,
+            //    Id = 5
+            //};
+
+            _httpClient.BaseAddress = new Uri("https://localhost:44367/api/ATE/");
+            var message = await _httpClient.PostAsJsonAsync("Add", body);
+
+            return View(message.Content);
+        }
+
+        [HttpGet]
+        public IActionResult AtePost()
+        {
+            //var atee = new ATE
+            //{
+            //    Description = "ddasdasd",
+            //    CalibrationDate = DateTime.Now,
+            //    Name = "name",
+            //    SerialNumber = "1234567890",
+            //    PartNumber = "1234567890",
+            //    BomList = "dsadas",
+            //    TPSId = 4,
+            //    Id = 5
+            //};
+
+            //_httpClient.BaseAddress = new Uri("https://localhost:44367/api/ATE/");
+            //var message = await _httpClient.PostAsJsonAsync("Add", body);
+
+            return View();
+        }
+        public ActionResult DosyaYukle()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DosyaGetir(int dosyaName)   // HttpPostedFileBase
+        {
+
+
+            return Ok();
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> DosyaYukle(IFormFile yuklenecekDosya)   // HttpPostedFileBase
+        {
+            if (yuklenecekDosya != null)
+            {
+                _httpClient.BaseAddress = new Uri("https://localhost:44367/api/File/");
+
+                string json = JsonConvert.SerializeObject(yuklenecekDosya);   //using Newtonsoft.Json
+
+                byte[] data;
+                using (var br = new BinaryReader(yuklenecekDosya.OpenReadStream()))
+                    data = br.ReadBytes((int)yuklenecekDosya.OpenReadStream().Length);
+
+                ByteArrayContent bytes = new ByteArrayContent(data);
+
+                MultipartFormDataContent multiContent = new MultipartFormDataContent();
+
+                multiContent.Add(bytes, "file", yuklenecekDosya.FileName);
+                StringContent httpcontent = new StringContent(json, Encoding.UTF8, "text/plain");
+
+                StreamContent streamContent = new StreamContent(HttpContext.Request.Body);
+                var message = await _httpClient.PostAsync("Add", multiContent);
+
+            }
+            return View();
+        }
+
 
         public IActionResult Privacy()
         {
@@ -97,4 +185,4 @@ namespace UI.Controllers
 
         }
     }
-    }
+}

@@ -26,5 +26,6 @@ namespace DataAccess.Context.EntityFramework
         public DbSet<Faults> Faults { get; set; }
         public DbSet<Logging> Logging { get; set; }
         public DbSet<Solvings> Solving { get; set; }
+        public DbSet<HRS> HRS { get; set; }
     }
 }
