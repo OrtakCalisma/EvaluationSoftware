@@ -14,5 +14,6 @@ namespace Core.Repositories.EentityFramework.Abstract
         void Add(T entity);
         void Update(T entity);
         void Delete(T entity);
+        int GetCount();
     }
 }

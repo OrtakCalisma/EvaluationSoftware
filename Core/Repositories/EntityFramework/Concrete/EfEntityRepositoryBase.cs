@@ -1,4 +1,5 @@
 ﻿using Core.Repositories.EentityFramework.Abstract;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -59,6 +60,13 @@ namespace Core.Repositories.EntityFramework.Concrete
                 var updatedEntity = context.Entry(entity);
                 updatedEntity.State = EntityState.Modified;
                 context.SaveChanges();
+            }
+        }
+        public int GetCount()
+        {
+            using (var context = new TContext())
+            {
+                return context.Set<TEntity>().Count();
             }
         }
     }

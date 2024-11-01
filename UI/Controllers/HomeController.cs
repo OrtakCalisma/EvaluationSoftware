@@ -48,7 +48,7 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostAte([FromBody] ATE body)
+        public async Task<IActionResult> AtePost(ATE body)
         {
             //var atee = new ATE
             //{
@@ -65,7 +65,7 @@ namespace UI.Controllers
             _httpClient.BaseAddress = new Uri("https://localhost:44367/api/ATE/");
             var message = await _httpClient.PostAsJsonAsync("Add", body);
 
-            return View(message.Content);
+            return RedirectToAction("AtePost");
         }
 
         [HttpGet]
@@ -86,7 +86,7 @@ namespace UI.Controllers
             //_httpClient.BaseAddress = new Uri("https://localhost:44367/api/ATE/");
             //var message = await _httpClient.PostAsJsonAsync("Add", body);
 
-            return View();
+            return View(new ATE()) ;
         }
         public ActionResult DosyaYukle()
         {
